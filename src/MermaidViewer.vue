@@ -219,9 +219,8 @@
   }
 
   const downloadPng = async () => {
-    const svg = (fullscreen.value ? dialog.value : root.value)?.querySelector(
-      'svg',
-    )
+    const host = fullscreen.value ? canvas.value : root.value
+    const svg = host?.querySelector('svg')
     if (!svg) {
       return
     }
