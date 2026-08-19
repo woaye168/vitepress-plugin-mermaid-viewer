@@ -1,0 +1,63 @@
+{
+  "name": "vitepress-plugin-mermaid-viewer",
+  "version": "0.1.0",
+  "description": "Mermaid diagrams for VitePress with fullscreen zoom, pan, copy, and download.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Alex Sun",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syaning/vitepress-plugin-mermaid-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/syaning/vitepress-plugin-mermaid-viewer/issues"
+  },
+  "homepage": "https://github.com/syaning/vitepress-plugin-mermaid-viewer#readme",
+  "keywords": [
+    "vitepress",
+    "mermaid",
+    "plugin",
+    "fullscreen",
+    "diagram"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./client.css": "./dist/client.css"
+  },
+  "sideEffects": [
+    "./dist/client.js",
+    "./dist/client.css"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "mermaid": ">=11",
+    "vite": ">=5",
+    "vitepress": ">=1.0.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "mermaid": "^11.16.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
+  }
+}
