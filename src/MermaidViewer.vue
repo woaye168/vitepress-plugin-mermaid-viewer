@@ -1,5 +1,6 @@
 <script setup>
   import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
+  import { downloadMermaidPng } from './export'
   import { renderMermaid } from './render'
 
   defineOptions({ inheritAttrs: false })
@@ -176,91 +177,11 @@
     }, 1500)
   }
 
-  const triggerDownload = (blob, filename) => {
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = filename
-    link.click()
-    URL.revokeObjectURL(url)
-  }
-
-  const serializeSvg = (svg) => {
-    const clone = svg.cloneNode(true)
-    clone.removeAttribute('style')
-
-    const viewBox = svg.viewBox?.baseVal
-    let width = 0
-    let height = 0
-    if (viewBox?.width && viewBox?.height) {
-      width = viewBox.width
-      height = viewBox.height
-    } else {
-      try {
-        const box = svg.getBBox()
-        width = box.width
-        height = box.height
-      } catch {
-        width = svg.clientWidth || 800
-        height = svg.clientHeight || 600
-      }
-    }
-
-    clone.setAttribute('width', String(Math.ceil(width)))
-    clone.setAttribute('height', String(Math.ceil(height)))
-    clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
-    clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
-
-    return {
-      xml: new XMLSerializer().serializeToString(clone),
-      width,
-      height,
-    }
-  }
-
-  const downloadPng = async () => {
+  const downloadPng = () => {
     const host = fullscreen.value ? canvas.value : root.value
     const svg = host?.querySelector('svg')
-    if (!svg) {
-      return
-    }
-
-    const { xml, width, height } = serializeSvg(svg)
-    const svgBlob = new Blob([xml], { type: 'image/svg+xml;charset=utf-8' })
-    const url = URL.createObjectURL(svgBlob)
-
-    try {
-      const image = new Image()
-      await new Promise((resolve, reject) => {
-        image.onload = resolve
-        image.onerror = reject
-        image.src = url
-      })
-
-      const ratio = 2
-      const exportCanvas = document.createElement('canvas')
-      exportCanvas.width = Math.max(1, Math.ceil(width * ratio))
-      exportCanvas.height = Math.max(1, Math.ceil(height * ratio))
-
-      const ctx = exportCanvas.getContext('2d')
-      const background =
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--vp-c-bg')
-          .trim() || '#ffffff'
-      ctx.fillStyle = background
-      ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height)
-      ctx.drawImage(image, 0, 0, exportCanvas.width, exportCanvas.height)
-
-      const png = await new Promise((resolve) => {
-        exportCanvas.toBlob(resolve, 'image/png')
-      })
-      if (png) {
-        triggerDownload(png, 'mermaid-diagram.png')
-      }
-    } catch {
-      triggerDownload(svgBlob, 'mermaid-diagram.svg')
-    } finally {
-      URL.revokeObjectURL(url)
+    if (svg) {
+      downloadMermaidPng(svg)
     }
   }
 
