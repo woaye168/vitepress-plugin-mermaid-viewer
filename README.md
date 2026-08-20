@@ -2,6 +2,8 @@
 
 Mermaid diagrams for VitePress, with fullscreen zoom, pan, copy, and PNG download.
 
+Docs: https://syaning.github.io/vitepress-plugin-mermaid-viewer/
+
 ## Install
 
 ```bash

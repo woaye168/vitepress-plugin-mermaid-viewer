@@ -22,10 +22,25 @@ export default defineConfig({
       name: 'fix-published-dist',
       closeBundle() {
         const clientJsPath = resolve(distDir, 'client.js')
-        const clientJs = readFileSync(clientJsPath, 'utf8')
-        if (!clientJs.includes("import './client.css'")) {
-          writeFileSync(clientJsPath, `import './client.css'\n${clientJs}`)
-        }
+        const clientCssPath = resolve(distDir, 'client.css')
+        const clientJs = readFileSync(clientJsPath, 'utf8').replace(
+          /^import '\.\/client\.css';?\n/,
+          '',
+        )
+
+        // VitePress SSR loads the published client entry in Node, which cannot
+        // import .css. Inject styles in the browser instead.
+        const css = readFileSync(clientCssPath, 'utf8')
+        const inject = `const __mvCss = ${JSON.stringify(css)};
+if (typeof document !== "undefined" && !document.getElementById("vitepress-plugin-mermaid-viewer-css")) {
+  const s = document.createElement("style");
+  s.id = "vitepress-plugin-mermaid-viewer-css";
+  s.textContent = __mvCss;
+  document.head.appendChild(s);
+}
+`
+
+        writeFileSync(clientJsPath, inject + clientJs)
 
         writeFileSync(
           resolve(distDir, 'client.d.ts'),

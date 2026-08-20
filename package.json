@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-mermaid-viewer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Mermaid diagrams for VitePress with fullscreen zoom, pan, copy, and download.",
   "type": "module",
   "license": "MIT",
@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/syaning/vitepress-plugin-mermaid-viewer/issues"
   },
-  "homepage": "https://github.com/syaning/vitepress-plugin-mermaid-viewer#readme",
+  "homepage": "https://syaning.github.io/vitepress-plugin-mermaid-viewer/",
   "keywords": [
     "vitepress",
     "mermaid",
@@ -43,7 +43,10 @@
   ],
   "scripts": {
     "build": "vite build",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "mermaid": ">=11",
