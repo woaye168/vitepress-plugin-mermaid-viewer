@@ -100,11 +100,13 @@
     dialog.value?.close()
   }
 
-  const onDialogClose = () => {
+  const onDialogClose = async () => {
     fullscreen.value = false
     dragging.value = false
     copied.value = false
     resetView()
+    await nextTick()
+    root.value?.blur()
   }
 
   const onKeydown = (event) => {
@@ -303,7 +305,7 @@
         </button>
         <button
           type="button"
-          class="mermaid-btn mermaid-btn-accent"
+          class="mermaid-btn"
           title="Close"
           aria-label="Close"
           @click="closeFullscreen"
@@ -388,7 +390,6 @@
     background: var(--vp-c-bg-soft);
   }
 
-  .mermaid-btn-accent,
   .mermaid-btn.copied {
     color: var(--vp-c-brand-1);
   }
