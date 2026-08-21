@@ -1,6 +1,6 @@
 <script setup>
   import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
-  import { downloadMermaidPng } from './export'
+  import { downloadMermaid } from './export'
   import { renderMermaid } from './render'
 
   defineOptions({ inheritAttrs: false })
@@ -25,7 +25,14 @@
   const dialog = ref(null)
   const fullscreen = ref(false)
   const copied = ref(false)
+  const downloadMenuOpen = ref(false)
   let copiedTimer = 0
+
+  const downloadFormats = [
+    { id: 'png', label: 'PNG' },
+    { id: 'svg', label: 'SVG' },
+    { id: 'jpeg', label: 'JPEG' },
+  ]
 
   const scale = ref(1)
   const x = ref(0)
@@ -94,6 +101,9 @@
     resetView()
     await nextTick()
     dialog.value?.showModal()
+    // showModal() focuses the first button; keep focus on the dialog so
+    // mobile browsers do not paint an outline on Zoom in.
+    dialog.value?.focus()
   }
 
   const closeFullscreen = () => {
@@ -104,6 +114,7 @@
     fullscreen.value = false
     dragging.value = false
     copied.value = false
+    downloadMenuOpen.value = false
     resetView()
     await nextTick()
     root.value?.blur()
@@ -179,11 +190,20 @@
     }, 1500)
   }
 
-  const downloadPng = () => {
+  const toggleDownloadMenu = () => {
+    downloadMenuOpen.value = !downloadMenuOpen.value
+  }
+
+  const closeDownloadMenu = () => {
+    downloadMenuOpen.value = false
+  }
+
+  const downloadAs = (format) => {
+    downloadMenuOpen.value = false
     const host = fullscreen.value ? canvas.value : root.value
     const svg = host?.querySelector('svg')
     if (svg) {
-      downloadMermaidPng(svg)
+      downloadMermaid(svg, format)
     }
   }
 
@@ -225,6 +245,7 @@
       v-if="fullscreen"
       ref="dialog"
       class="mermaid-fs"
+      tabindex="-1"
       aria-label="Mermaid fullscreen preview"
       @close="onDialogClose"
       @click.self="closeFullscreen"
@@ -274,19 +295,40 @@
             <path d="M21 3l-7 7M3 21l7-7" />
           </svg>
         </button>
-        <button
-          type="button"
-          class="mermaid-btn"
-          title="Download PNG"
-          aria-label="Download PNG"
-          @click="downloadPng"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 4v11" />
-            <path d="M7 11l5 5 5-5" />
-            <path d="M5 19h14" />
-          </svg>
-        </button>
+        <div class="mermaid-download">
+          <button
+            type="button"
+            class="mermaid-btn"
+            title="Download"
+            aria-label="Download"
+            aria-haspopup="menu"
+            :aria-expanded="downloadMenuOpen"
+            @click="toggleDownloadMenu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4v11" />
+              <path d="M7 11l5 5 5-5" />
+              <path d="M5 19h14" />
+            </svg>
+          </button>
+          <div
+            v-if="downloadMenuOpen"
+            class="mermaid-download-menu"
+            role="menu"
+            aria-label="Download format"
+          >
+            <button
+              v-for="format in downloadFormats"
+              :key="format.id"
+              type="button"
+              class="mermaid-download-item"
+              role="menuitem"
+              @click="downloadAs(format.id)"
+            >
+              {{ format.label }}
+            </button>
+          </div>
+        </div>
         <button
           type="button"
           class="mermaid-btn"
@@ -318,11 +360,11 @@
       <div
         class="mermaid-fs-stage"
         :class="{ dragging }"
-        @wheel="onWheel"
-        @pointerdown="onPointerDown"
+        @pointerdown="closeDownloadMenu(); onPointerDown($event)"
         @pointermove="onPointerMove"
         @pointerup="onPointerUp"
         @pointercancel="onPointerUp"
+        @wheel="onWheel"
         @dblclick="resetView"
       >
         <div
@@ -404,6 +446,42 @@
     stroke-linejoin: round;
   }
 
+  .mermaid-download {
+    position: relative;
+  }
+
+  .mermaid-download-menu {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    right: 0;
+    z-index: 3;
+    min-width: 5.5rem;
+    padding: 0.25rem;
+    border-radius: 8px;
+    background: var(--vp-c-bg-elv);
+    border: 1px solid var(--vp-c-divider);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .mermaid-download-item {
+    appearance: none;
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.65rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--vp-c-text-1);
+    font: inherit;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mermaid-download-item:hover {
+    background: var(--vp-c-bg-soft);
+  }
+
   .mermaid-fs {
     width: 100vw;
     height: 100vh;
@@ -416,6 +494,7 @@
     color: var(--vp-c-text-1);
     user-select: none;
     -webkit-user-select: none;
+    outline: none;
   }
 
   .mermaid-fs::backdrop {

@@ -71,6 +71,9 @@ Any other initialize option can be passed through. These are applied on every re
 
 ```ts
 mermaidPlugin({
+  themeVariables: {
+    fontFamily: "Courier, 'LXGW WenKai', sans-serif",
+  },
   flowchart: {
     htmlLabels: true,
     curve: 'basis',

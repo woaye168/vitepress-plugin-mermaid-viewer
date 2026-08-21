@@ -1,6 +1,6 @@
 # vitepress-plugin-mermaid-viewer
 
-Mermaid diagrams for VitePress, with fullscreen zoom, pan, copy, and PNG download.
+Mermaid diagrams for VitePress, with fullscreen zoom, pan, copy, and PNG / SVG / JPEG download.
 
 Docs: https://syaning.github.io/vitepress-plugin-mermaid-viewer/
 
