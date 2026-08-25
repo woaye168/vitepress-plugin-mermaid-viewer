@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-mermaid-viewer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Mermaid diagrams for VitePress with fullscreen zoom, pan, copy, and PNG / SVG / JPEG download.",
   "type": "module",
   "license": "MIT",
