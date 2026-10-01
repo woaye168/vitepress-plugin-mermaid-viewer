@@ -5,10 +5,10 @@ if (typeof document !== "undefined" && !document.getElementById("vitepress-plugi
   s.textContent = __mvCss;
   document.head.appendChild(s);
 }
-import { defineComponent as Ft, ref as p, computed as ht, watch as jt, onMounted as Dt, onUnmounted as Vt, openBlock as k, createElementBlock as C, withKeys as gt, withModifiers as O, createCommentVNode as V, toDisplayString as pt, createElementVNode as a, Fragment as $t, renderList as Rt, normalizeClass as vt, normalizeStyle as Zt, nextTick as $ } from "vue";
-const Nt = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif';
+import { defineComponent as zt, ref as p, computed as ht, watch as Ft, onMounted as Dt, onUnmounted as Rt, openBlock as C, createElementBlock as k, withKeys as gt, withModifiers as B, createCommentVNode as R, toDisplayString as pt, createElementVNode as l, Fragment as $t, renderList as Vt, normalizeClass as vt, normalizeStyle as Nt, nextTick as $ } from "vue";
+const Zt = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif';
 let G = {}, wt = !1;
-async function Wt() {
+async function It() {
   if (!wt) {
     try {
       G = (await import("virtual:mermaid-viewer-config")).default;
@@ -18,61 +18,61 @@ async function Wt() {
     wt = !0;
   }
 }
-function qt() {
+function Wt() {
   const n = G.themeVariables;
   if (!n || typeof n != "object")
     return "";
   const i = n.fontFamily;
   return typeof i == "string" && i.trim() ? i.trim() : "";
 }
-function It(n) {
-  const i = n.querySelector("text, tspan, foreignObject span, foreignObject div, foreignObject p") || n, r = getComputedStyle(i).fontFamily;
-  return r && r !== "initial" ? r : "";
+function qt(n) {
+  const i = n.querySelector("text, tspan, foreignObject span, foreignObject div, foreignObject p") || n, o = getComputedStyle(i).fontFamily;
+  return o && o !== "initial" ? o : "";
 }
 function Ut(n) {
-  return qt() || It(n) || Nt;
+  return Wt() || qt(n) || Zt;
 }
 function Yt(n) {
-  var l;
-  const i = (n == null ? void 0 : n.querySelector("span, div, p")) || n, r = i && "innerHTML" in i ? i.innerHTML : "";
-  if (r)
-    return r.split(/<br\s*\/?>/i).map((u) => u.replace(/<[^>]+>/g, "").trim()).filter(Boolean);
-  const o = ((l = n == null ? void 0 : n.textContent) == null ? void 0 : l.trim()) ?? "";
-  return o ? [o] : [];
+  var r;
+  const i = (n == null ? void 0 : n.querySelector("span, div, p")) || n, o = i && "innerHTML" in i ? i.innerHTML : "";
+  if (o)
+    return o.split(/<br\s*\/?>/i).map((u) => u.replace(/<[^>]+>/g, "").trim()).filter(Boolean);
+  const a = ((r = n == null ? void 0 : n.textContent) == null ? void 0 : r.trim()) ?? "";
+  return a ? [a] : [];
 }
-function Xt(n, i, r) {
-  const o = Yt(i || n);
-  if (!o.length) {
+function Xt(n, i, o) {
+  const a = Yt(i || n);
+  if (!a.length) {
     n.remove();
     return;
   }
-  const l = parseFloat(n.getAttribute("x") || "0"), u = parseFloat(n.getAttribute("y") || "0"), c = parseFloat(n.getAttribute("width") || "0"), f = parseFloat(n.getAttribute("height") || "0"), m = i == null ? void 0 : i.querySelector("span, div, p"), d = m ? getComputedStyle(m) : null, b = parseFloat((d == null ? void 0 : d.fontSize) || "16") * 1.2, h = u + f / 2 - (o.length - 1) * b / 2, g = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  g.setAttribute("x", String(l + c / 2)), g.setAttribute("y", String(h)), g.setAttribute("text-anchor", "middle"), g.setAttribute("dominant-baseline", "central"), g.setAttribute("font-family", r), d && (g.setAttribute("font-size", d.fontSize), g.setAttribute("font-weight", d.fontWeight), g.setAttribute("fill", d.color)), o.forEach((A, M) => {
+  const r = parseFloat(n.getAttribute("x") || "0"), u = parseFloat(n.getAttribute("y") || "0"), c = parseFloat(n.getAttribute("width") || "0"), f = parseFloat(n.getAttribute("height") || "0"), m = i == null ? void 0 : i.querySelector("span, div, p"), d = m ? getComputedStyle(m) : null, b = parseFloat((d == null ? void 0 : d.fontSize) || "16") * 1.2, h = u + f / 2 - (a.length - 1) * b / 2, g = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  g.setAttribute("x", String(r + c / 2)), g.setAttribute("y", String(h)), g.setAttribute("text-anchor", "middle"), g.setAttribute("dominant-baseline", "central"), g.setAttribute("font-family", o), d && (g.setAttribute("font-size", d.fontSize), g.setAttribute("font-weight", d.fontWeight), g.setAttribute("fill", d.color)), a.forEach((A, M) => {
     const x = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "tspan"
     );
-    x.setAttribute("x", String(l + c / 2)), x.setAttribute("dy", M === 0 ? "0" : String(b)), x.setAttribute("font-family", r), x.textContent = A, g.appendChild(x);
+    x.setAttribute("x", String(r + c / 2)), x.setAttribute("dy", M === 0 ? "0" : String(b)), x.setAttribute("font-family", o), x.textContent = A, g.appendChild(x);
   }), n.replaceWith(g);
 }
 function Gt(n, i) {
-  const r = n.cloneNode(!0);
-  r.removeAttribute("style"), r.querySelectorAll("text, tspan").forEach((u) => {
+  const o = n.cloneNode(!0);
+  o.removeAttribute("style"), o.querySelectorAll("text, tspan").forEach((u) => {
     u.setAttribute("font-family", i);
   });
-  const o = n.querySelectorAll("foreignObject");
-  r.querySelectorAll("foreignObject").forEach((u, c) => {
-    Xt(u, o[c], i);
+  const a = n.querySelectorAll("foreignObject");
+  o.querySelectorAll("foreignObject").forEach((u, c) => {
+    Xt(u, a[c], i);
   });
-  const l = document.createElementNS("http://www.w3.org/2000/svg", "style");
-  return l.textContent = `text, tspan { font-family: ${i} !important; }`, r.appendChild(l), r;
+  const r = document.createElementNS("http://www.w3.org/2000/svg", "style");
+  return r.textContent = `text, tspan { font-family: ${i} !important; }`, o.appendChild(r), o;
 }
 function Kt(n, i) {
   var f;
-  const o = Gt(n, i), l = (f = n.viewBox) == null ? void 0 : f.baseVal;
+  const a = Gt(n, i), r = (f = n.viewBox) == null ? void 0 : f.baseVal;
   let u = 0, c = 0;
-  if (l != null && l.width && (l != null && l.height))
-    u = l.width, c = l.height;
+  if (r != null && r.width && (r != null && r.height))
+    u = r.width, c = r.height;
   else
     try {
       const m = n.getBBox();
@@ -80,27 +80,27 @@ function Kt(n, i) {
     } catch {
       u = n.clientWidth || 800, c = n.clientHeight || 600;
     }
-  return o.setAttribute("width", String(Math.ceil(u))), o.setAttribute("height", String(Math.ceil(c))), o.setAttribute("xmlns", "http://www.w3.org/2000/svg"), o.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink"), {
-    xml: '<?xml version="1.0" encoding="UTF-8"?>' + new XMLSerializer().serializeToString(o),
+  return a.setAttribute("width", String(Math.ceil(u))), a.setAttribute("height", String(Math.ceil(c))), a.setAttribute("xmlns", "http://www.w3.org/2000/svg"), a.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink"), {
+    xml: '<?xml version="1.0" encoding="UTF-8"?>' + new XMLSerializer().serializeToString(a),
     width: u,
     height: c
   };
 }
 function X(n, i) {
-  const r = URL.createObjectURL(n), o = document.createElement("a");
-  o.href = r, o.download = i, o.click(), URL.revokeObjectURL(r);
+  const o = URL.createObjectURL(n), a = document.createElement("a");
+  a.href = o, a.download = i, a.click(), URL.revokeObjectURL(o);
 }
 const Jt = {
   png: "image/png",
   jpeg: "image/jpeg"
 };
-async function Qt(n, i, r, o) {
-  const l = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(n)}`, u = new Image();
+async function Qt(n, i, o, a) {
+  const r = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(n)}`, u = new Image();
   await new Promise((y, b) => {
-    u.onload = () => y(), u.onerror = b, u.src = l;
+    u.onload = () => y(), u.onerror = b, u.src = r;
   });
   const c = 2, f = document.createElement("canvas");
-  f.width = Math.max(1, Math.ceil(i * c)), f.height = Math.max(1, Math.ceil(r * c));
+  f.width = Math.max(1, Math.ceil(i * c)), f.height = Math.max(1, Math.ceil(o * c));
   const m = f.getContext("2d");
   if (!m)
     return null;
@@ -108,20 +108,20 @@ async function Qt(n, i, r, o) {
   return m.fillStyle = d, m.fillRect(0, 0, f.width, f.height), m.drawImage(u, 0, 0, f.width, f.height), new Promise((y) => {
     f.toBlob(
       y,
-      Jt[o],
-      o === "jpeg" ? 0.92 : void 0
+      Jt[a],
+      a === "jpeg" ? 0.92 : void 0
     );
   });
 }
 async function te(n, i = "png") {
-  await Wt();
-  const r = Ut(n), { xml: o, width: l, height: u } = Kt(n, r), c = new Blob([o], { type: "image/svg+xml;charset=utf-8" });
+  await It();
+  const o = Ut(n), { xml: a, width: r, height: u } = Kt(n, o), c = new Blob([a], { type: "image/svg+xml;charset=utf-8" });
   if (i === "svg") {
     X(c, "mermaid-diagram.svg");
     return;
   }
   try {
-    const f = await Qt(o, l, u, i);
+    const f = await Qt(a, r, u, i);
     if (f) {
       X(f, `mermaid-diagram.${i === "jpeg" ? "jpg" : i}`);
       return;
@@ -130,13 +130,13 @@ async function te(n, i = "png") {
   }
   X(c, "mermaid-diagram.svg");
 }
-let yt = 0, Z = {}, bt = !1;
+let yt = 0, N = {}, bt = !1;
 async function ee() {
   if (!bt) {
     try {
-      Z = (await import("virtual:mermaid-viewer-config")).default;
+      N = (await import("virtual:mermaid-viewer-config")).default;
     } catch {
-      Z = {};
+      N = {};
     }
     bt = !0;
   }
@@ -145,39 +145,51 @@ function ne(n) {
   return typeof n == "string" && n.trim() ? n : "";
 }
 function ie(n) {
-  const i = ne(Z.theme);
+  const i = ne(N.theme);
   return i || (n ? "dark" : "default");
 }
-async function oe(n, i = !1) {
-  const r = (await import("mermaid")).default;
-  await ee();
-  const o = ie(i);
-  r.initialize({
+const oe = {
+  mmdaccent: ["#d9f7e3", "#1d4a2c"],
+  // 强调块底色
+  mmdaccentline: ["#0a9447", "#3ddc84"]
+  // 强调描边
+};
+function ae(n, i) {
+  let o = n;
+  for (const [a, [r, u]] of Object.entries(oe))
+    o = o.replaceAll(new RegExp(`\\b${a}\\b`, "g"), i ? u : r);
+  return o;
+}
+async function re(n, i = !1) {
+  const o = (await import("mermaid")).default;
+  await ee(), n = ae(n, i);
+  const a = ie(i);
+  o.initialize({
     startOnLoad: !1,
     securityLevel: "loose",
-    ...Z,
-    theme: o
+    ...N,
+    theme: a
   }), yt += 1;
-  const { svg: l } = await r.render(`mermaid-svg-${yt}`, n);
-  return l;
+  const { svg: r } = await o.render(`mermaid-svg-${yt}`, n);
+  return r;
 }
-const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
+const le = ["id", "onKeydown"], se = ["innerHTML"], ue = {
   key: 1,
   class: "mermaid-error"
-}, se = { class: "mermaid-download" }, ue = ["aria-expanded"], ce = {
+}, ce = { class: "mermaid-download" }, de = ["aria-expanded"], fe = {
   key: 0,
   class: "mermaid-download-menu",
   role: "menu",
   "aria-label": "Download format"
-}, de = ["onClick"], fe = ["title", "aria-label"], me = {
+}, me = ["onClick"], he = ["title", "aria-label"], ge = {
   key: 0,
   viewBox: "0 0 24 24",
   "aria-hidden": "true"
-}, he = {
+}, pe = {
   key: 1,
   viewBox: "0 0 24 24",
   "aria-hidden": "true"
-}, ge = ["innerHTML"], pe = 0.25, ve = 8, R = 1.2, xt = 1.12, we = /* @__PURE__ */ Ft({
+}, ve = ["innerHTML"], we = 0.25, ye = 8, V = 1.2, xt = 1.12, be = /* @__PURE__ */ zt({
   inheritAttrs: !1,
   __name: "MermaidViewer",
   props: {
@@ -185,13 +197,13 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
     id: {}
   },
   setup(n) {
-    const i = n, r = [
+    const i = n, o = [
       { id: "png", label: "PNG" },
       { id: "svg", label: "SVG" },
       { id: "jpeg", label: "JPEG" }
-    ], o = p(""), l = p(""), u = p(null), c = p(null), f = p(null), m = p(null), d = p(!1), y = p(!1), b = p(!1), h = p(1), g = p(0), A = p(0), M = p(0), x = p(0), T = p(!1);
-    let _ = null, N = 0, W = 0, z = null, F = !1, K = 0, J = 0, Q = 0, tt = 0, E = 1, L = null, P = 0;
-    const q = (t) => Math.min(ve, Math.max(pe, t)), j = ht(() => {
+    ], a = p(""), r = p(""), u = p(null), c = p(null), f = p(null), m = p(null), d = p(!1), y = p(!1), b = p(!1), h = p(1), g = p(0), A = p(0), M = p(0), x = p(0), T = p(!1);
+    let _ = null, Z = 0, I = 0, j = null, z = !1, K = 0, J = 0, Q = 0, tt = 0, E = 1, O = null, P = 0;
+    const W = (t) => Math.min(ye, Math.max(we, t)), F = ht(() => {
       try {
         return decodeURIComponent(i.graph);
       } catch {
@@ -200,7 +212,7 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
     }), St = ht(() => ({
       transform: `translate(-50%, -50%) translate(${M.value}px, ${x.value}px)`
     }));
-    function I() {
+    function q() {
       return document.documentElement.classList.contains("dark");
     }
     function et(t) {
@@ -230,14 +242,14 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
       const t = (e = c.value) == null ? void 0 : e.querySelector("svg");
       return t instanceof SVGSVGElement ? t : null;
     }
-    function kt(t) {
+    function Ct(t) {
       t.removeAttribute("width"), t.removeAttribute("height"), t.style.setProperty("max-width", "none", "important"), t.style.setProperty("max-height", "none", "important");
     }
-    function B() {
+    function L() {
       const t = nt();
       if (!t || g.value <= 0 || A.value <= 0)
         return;
-      kt(t);
+      Ct(t);
       const e = g.value * h.value, s = A.value * h.value;
       t.style.width = `${e}px`, t.style.height = `${s}px`, c.value && (c.value.style.width = `${e}px`, c.value.style.height = `${s}px`);
     }
@@ -252,69 +264,69 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
       if (!(v > 0 && w > 0))
         return;
       const S = Math.min(v / s.width, w / s.height, 1);
-      g.value = s.width * S, A.value = s.height * S, B();
+      g.value = s.width * S, A.value = s.height * S, L();
     }
     async function ot() {
-      const t = ++W, e = I();
-      z = e;
+      const t = ++I, e = q();
+      j = e;
       try {
-        const s = await oe(j.value, e);
-        if (t !== W)
+        const s = await re(F.value, e);
+        if (t !== I)
           return;
-        o.value = s, l.value = "", d.value && (await $(), it());
+        a.value = s, r.value = "", d.value && (await $(), it());
       } catch (s) {
-        if (t !== W)
+        if (t !== I)
           return;
-        l.value = s instanceof Error ? s.message : String(s);
+        r.value = s instanceof Error ? s.message : String(s);
       }
     }
     function U(t, e, s) {
-      const v = m.value, w = q(t), S = h.value;
+      const v = m.value, w = W(t), S = h.value;
       if (w === S)
         return;
       if (!v) {
-        h.value = w, B();
+        h.value = w, L();
         return;
       }
       const D = v.getBoundingClientRect(), dt = e - D.left - D.width / 2, ft = s - D.top - D.height / 2, mt = w / S;
-      M.value = dt - (dt - M.value) * mt, x.value = ft - (ft - x.value) * mt, h.value = w, B();
+      M.value = dt - (dt - M.value) * mt, x.value = ft - (ft - x.value) * mt, h.value = w, L();
     }
-    function Ct(t, e, s) {
-      E *= t, L = { clientX: e, clientY: s }, !P && (P = requestAnimationFrame(() => {
-        if (P = 0, !L || E === 1) {
-          E = 1, L = null;
+    function kt(t, e, s) {
+      E *= t, O = { clientX: e, clientY: s }, !P && (P = requestAnimationFrame(() => {
+        if (P = 0, !O || E === 1) {
+          E = 1, O = null;
           return;
         }
-        const v = h.value * E, w = L;
-        E = 1, L = null, U(v, w.clientX, w.clientY);
+        const v = h.value * E, w = O;
+        E = 1, O = null, U(v, w.clientX, w.clientY);
       }));
     }
     function at() {
       const t = m.value;
       if (!t) {
-        h.value = q(h.value * R), B();
+        h.value = W(h.value * V), L();
         return;
       }
       const e = t.getBoundingClientRect();
-      U(h.value * R, e.left + e.width / 2, e.top + e.height / 2);
+      U(h.value * V, e.left + e.width / 2, e.top + e.height / 2);
     }
     function rt() {
       const t = m.value;
       if (!t) {
-        h.value = q(h.value / R), B();
+        h.value = W(h.value / V), L();
         return;
       }
       const e = t.getBoundingClientRect();
-      U(h.value / R, e.left + e.width / 2, e.top + e.height / 2);
+      U(h.value / V, e.left + e.width / 2, e.top + e.height / 2);
     }
     function H() {
-      h.value = 1, M.value = 0, x.value = 0, B();
+      h.value = 1, M.value = 0, x.value = 0, L();
     }
     function At() {
-      F || (document.addEventListener("keydown", ut), F = !0);
+      z || (document.addEventListener("keydown", ut), z = !0);
     }
     function lt() {
-      F && (document.removeEventListener("keydown", ut), F = !1);
+      z && (document.removeEventListener("keydown", ut), z = !1);
     }
     async function Y() {
       var t, e;
@@ -328,21 +340,21 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
       var t;
       d.value = !1, T.value = !1, y.value = !1, b.value = !1, H(), await $(), (t = u.value) == null || t.blur();
     }
-    function Lt(t) {
+    function Ot(t) {
       var e;
       d.value || (e = window.getSelection()) != null && e.toString() || (t.preventDefault(), Y());
     }
     function ut(t) {
       d.value && (t.key === "0" ? H() : t.key === "+" || t.key === "=" ? at() : (t.key === "-" || t.key === "_") && rt());
     }
-    function Bt(t) {
+    function Lt(t) {
       if (!d.value)
         return;
       t.preventDefault();
       const e = t.deltaY > 0 ? 1 / xt : xt;
-      Ct(e, t.clientX, t.clientY);
+      kt(e, t.clientX, t.clientY);
     }
-    function Ot(t) {
+    function Bt(t) {
       Ht(), !(!d.value || t.button !== 0) && (T.value = !0, K = t.clientX, J = t.clientY, Q = M.value, tt = x.value, t.currentTarget.setPointerCapture(t.pointerId));
     }
     function Tt(t) {
@@ -352,14 +364,14 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
       T.value = !1;
     }
     async function _t() {
-      if (j.value) {
+      if (F.value) {
         try {
-          await navigator.clipboard.writeText(j.value);
+          await navigator.clipboard.writeText(F.value);
         } catch {
           const t = document.createElement("textarea");
-          t.value = j.value, t.setAttribute("readonly", ""), t.style.position = "fixed", t.style.left = "-9999px", document.body.appendChild(t), t.select(), document.execCommand("copy"), t.remove();
+          t.value = F.value, t.setAttribute("readonly", ""), t.style.position = "fixed", t.style.left = "-9999px", document.body.appendChild(t), t.select(), document.execCommand("copy"), t.remove();
         }
-        y.value = !0, window.clearTimeout(N), N = window.setTimeout(() => {
+        y.value = !0, window.clearTimeout(Z), Z = window.setTimeout(() => {
           y.value = !1;
         }, 1500);
       }
@@ -370,24 +382,24 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
     function Ht() {
       b.value = !1;
     }
-    function zt(t) {
+    function jt(t) {
       b.value = !1;
       const e = d.value ? c.value : u.value, s = e == null ? void 0 : e.querySelector("svg");
       s && te(s, t);
     }
-    return jt(d, (t) => {
+    return Ft(d, (t) => {
       t ? At() : lt();
     }), Dt(() => {
-      z = I(), _ = new MutationObserver(() => {
-        const t = I();
-        t !== z && (z = t, ot());
+      j = q(), _ = new MutationObserver(() => {
+        const t = q();
+        t !== j && (j = t, ot());
       }), _.observe(document.documentElement, {
         attributes: !0,
         attributeFilter: ["class"]
       }), ot();
-    }), Vt(() => {
-      lt(), _ == null || _.disconnect(), window.clearTimeout(N), P && cancelAnimationFrame(P), E = 1, L = null;
-    }), (t, e) => (k(), C("div", {
+    }), Rt(() => {
+      lt(), _ == null || _.disconnect(), window.clearTimeout(Z), P && cancelAnimationFrame(P), E = 1, O = null;
+    }), (t, e) => (C(), k("div", {
       id: n.id,
       ref_key: "root",
       ref: u,
@@ -396,19 +408,19 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
       tabindex: "0",
       title: "Open fullscreen",
       "aria-label": "Open mermaid fullscreen",
-      onClick: Lt,
+      onClick: Ot,
       onKeydown: [
-        gt(O(Y, ["prevent"]), ["enter"]),
-        gt(O(Y, ["prevent"]), ["space"])
+        gt(B(Y, ["prevent"]), ["enter"]),
+        gt(B(Y, ["prevent"]), ["space"])
       ]
     }, [
-      d.value ? V("", !0) : (k(), C("div", {
+      d.value ? R("", !0) : (C(), k("div", {
         key: 0,
         class: "mermaid",
-        innerHTML: o.value
-      }, null, 8, re)),
-      l.value && !d.value ? (k(), C("pre", le, pt(l.value), 1)) : V("", !0),
-      d.value ? (k(), C("dialog", {
+        innerHTML: a.value
+      }, null, 8, se)),
+      r.value && !d.value ? (C(), k("pre", ue, pt(r.value), 1)) : R("", !0),
+      d.value ? (C(), k("dialog", {
         key: 2,
         ref_key: "dialog",
         ref: f,
@@ -416,75 +428,75 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
         tabindex: "-1",
         "aria-label": "Mermaid fullscreen preview",
         onClose: Et,
-        onClick: O(st, ["self"])
+        onClick: B(st, ["self"])
       }, [
-        a("div", {
+        l("div", {
           class: "mermaid-toolbar",
-          onPointerdown: e[0] || (e[0] = O(() => {
+          onPointerdown: e[0] || (e[0] = B(() => {
           }, ["prevent", "stop"])),
-          onMousedown: e[1] || (e[1] = O(() => {
+          onMousedown: e[1] || (e[1] = B(() => {
           }, ["prevent", "stop"])),
-          onClick: e[2] || (e[2] = O(() => {
+          onClick: e[2] || (e[2] = B(() => {
           }, ["stop"]))
         }, [
-          a("button", {
+          l("button", {
             type: "button",
             class: "mermaid-btn",
             title: "Zoom in",
             "aria-label": "Zoom in",
             onClick: at
           }, [...e[3] || (e[3] = [
-            a("svg", {
+            l("svg", {
               viewBox: "0 0 24 24",
               "aria-hidden": "true"
             }, [
-              a("circle", {
+              l("circle", {
                 cx: "11",
                 cy: "11",
                 r: "7"
               }),
-              a("path", { d: "M20 20l-3.5-3.5" }),
-              a("path", { d: "M11 8v6M8 11h6" })
+              l("path", { d: "M20 20l-3.5-3.5" }),
+              l("path", { d: "M11 8v6M8 11h6" })
             ], -1)
           ])]),
-          a("button", {
+          l("button", {
             type: "button",
             class: "mermaid-btn",
             title: "Zoom out",
             "aria-label": "Zoom out",
             onClick: rt
           }, [...e[4] || (e[4] = [
-            a("svg", {
+            l("svg", {
               viewBox: "0 0 24 24",
               "aria-hidden": "true"
             }, [
-              a("circle", {
+              l("circle", {
                 cx: "11",
                 cy: "11",
                 r: "7"
               }),
-              a("path", { d: "M20 20l-3.5-3.5" }),
-              a("path", { d: "M8 11h6" })
+              l("path", { d: "M20 20l-3.5-3.5" }),
+              l("path", { d: "M8 11h6" })
             ], -1)
           ])]),
-          a("button", {
+          l("button", {
             type: "button",
             class: "mermaid-btn",
             title: "Reset view",
             "aria-label": "Reset view",
             onClick: H
           }, [...e[5] || (e[5] = [
-            a("svg", {
+            l("svg", {
               viewBox: "0 0 24 24",
               "aria-hidden": "true"
             }, [
-              a("path", { d: "M15 3h6v6" }),
-              a("path", { d: "M9 21H3v-6" }),
-              a("path", { d: "M21 3l-7 7M3 21l7-7" })
+              l("path", { d: "M15 3h6v6" }),
+              l("path", { d: "M9 21H3v-6" }),
+              l("path", { d: "M21 3l-7 7M3 21l7-7" })
             ], -1)
           ])]),
-          a("div", se, [
-            a("button", {
+          l("div", ce, [
+            l("button", {
               type: "button",
               class: "mermaid-btn",
               title: "Download",
@@ -493,93 +505,93 @@ const ae = ["id", "onKeydown"], re = ["innerHTML"], le = {
               "aria-expanded": b.value,
               onClick: Pt
             }, [...e[6] || (e[6] = [
-              a("svg", {
+              l("svg", {
                 viewBox: "0 0 24 24",
                 "aria-hidden": "true"
               }, [
-                a("path", { d: "M12 4v11" }),
-                a("path", { d: "M7 11l5 5 5-5" }),
-                a("path", { d: "M5 19h14" })
+                l("path", { d: "M12 4v11" }),
+                l("path", { d: "M7 11l5 5 5-5" }),
+                l("path", { d: "M5 19h14" })
               ], -1)
-            ])], 8, ue),
-            b.value ? (k(), C("div", ce, [
-              (k(), C($t, null, Rt(r, (s) => a("button", {
+            ])], 8, de),
+            b.value ? (C(), k("div", fe, [
+              (C(), k($t, null, Vt(o, (s) => l("button", {
                 key: s.id,
                 type: "button",
                 class: "mermaid-download-item",
                 role: "menuitem",
-                onClick: (v) => zt(s.id)
-              }, pt(s.label), 9, de)), 64))
-            ])) : V("", !0)
+                onClick: (v) => jt(s.id)
+              }, pt(s.label), 9, me)), 64))
+            ])) : R("", !0)
           ]),
-          a("button", {
+          l("button", {
             type: "button",
             class: vt(["mermaid-btn", { copied: y.value }]),
             title: y.value ? "Copied" : "Copy code",
             "aria-label": y.value ? "Copied" : "Copy code",
             onClick: _t
           }, [
-            y.value ? (k(), C("svg", me, [...e[7] || (e[7] = [
-              a("path", { d: "M5 13l4 4L19 7" }, null, -1)
-            ])])) : (k(), C("svg", he, [...e[8] || (e[8] = [
-              a("rect", {
+            y.value ? (C(), k("svg", ge, [...e[7] || (e[7] = [
+              l("path", { d: "M5 13l4 4L19 7" }, null, -1)
+            ])])) : (C(), k("svg", pe, [...e[8] || (e[8] = [
+              l("rect", {
                 x: "8",
                 y: "8",
                 width: "12",
                 height: "12",
                 rx: "2"
               }, null, -1),
-              a("path", { d: "M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" }, null, -1)
+              l("path", { d: "M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" }, null, -1)
             ])]))
-          ], 10, fe),
-          a("button", {
+          ], 10, he),
+          l("button", {
             type: "button",
             class: "mermaid-btn",
             title: "Close",
             "aria-label": "Close",
             onClick: st
           }, [...e[9] || (e[9] = [
-            a("svg", {
+            l("svg", {
               viewBox: "0 0 24 24",
               "aria-hidden": "true"
             }, [
-              a("path", { d: "M6 6l12 12M18 6L6 18" })
+              l("path", { d: "M6 6l12 12M18 6L6 18" })
             ], -1)
           ])])
         ], 32),
-        a("div", {
+        l("div", {
           ref_key: "stage",
           ref: m,
           class: vt(["mermaid-fs-stage", { dragging: T.value }]),
-          onPointerdown: Ot,
+          onPointerdown: Bt,
           onPointermove: Tt,
           onPointerup: ct,
           onPointercancel: ct,
-          onWheel: Bt,
+          onWheel: Lt,
           onDblclick: H
         }, [
-          a("div", {
+          l("div", {
             ref_key: "canvas",
             ref: c,
             class: "mermaid-fs-canvas",
-            style: Zt(St.value),
-            innerHTML: o.value
-          }, null, 12, ge)
+            style: Nt(St.value),
+            innerHTML: a.value
+          }, null, 12, ve)
         ], 34)
-      ], 544)) : V("", !0)
-    ], 40, ae));
+      ], 544)) : R("", !0)
+    ], 40, le));
   }
-}), ye = (n, i) => {
-  const r = n.__vccOpts || n;
-  for (const [o, l] of i)
-    r[o] = l;
-  return r;
-}, be = /* @__PURE__ */ ye(we, [["__scopeId", "data-v-d9fc4468"]]);
-function Se(n) {
-  n.component("Mermaid", be);
+}), xe = (n, i) => {
+  const o = n.__vccOpts || n;
+  for (const [a, r] of i)
+    o[a] = r;
+  return o;
+}, Se = /* @__PURE__ */ xe(be, [["__scopeId", "data-v-d9fc4468"]]);
+function Ce(n) {
+  n.component("Mermaid", Se);
 }
 export {
-  be as MermaidViewer,
-  Se as enhanceMermaid
+  Se as MermaidViewer,
+  Ce as enhanceMermaid
 };
 //# sourceMappingURL=client.js.map
